@@ -1,55 +1,76 @@
-﻿abstract class GeoObject
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HW4._2
 {
-    protected double x { get; set; }
-    protected double y { get; set; }
-    protected string description { get; set; }
-    protected string name { get; set; }
-    public virtual void getInfo() {
-        Console.WriteLine("x=" + this.x + "; y=" + this.y + "; description=" + this.description + "; name=" + this.name );
-    }
-
-
-}
-
-class River:GeoObject
-{
-    protected double speed { get; set; }
-    protected double totalLength { get; set; }
-
-    public River(double xTemp, double yTemp, string descriptionTemp, string nameTemp, double speedTemp, double totalLengthTemp)
+    interface IGeoObject
     {
-        this.x = xTemp;
-        this.y = yTemp;
-        this.description = descriptionTemp;
-        this.name = nameTemp;
-        this.speed = speedTemp;
-        this.totalLength = totalLengthTemp;
+        double X { get; set; }
+        double Y { get; set; }
+        string Name { get; set; }
+        string Description { get; set; }
+        public void getInfo();
     }
-    public River() { }
-    public override void getInfo()
+    class River : IGeoObject
     {
-        Console.WriteLine("x="+this.x+"; y="+this.y+"; description="+this.description+"; name="+this.name+"; total length="+this.totalLength+"km; speed="+this.speed+"km/s");
-    }
-}
+        public double Speed { get; set; }
+        public double TotalLength { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-class Mountain : GeoObject
-{
-    protected string highestPeak { get; set; }
-    public override void getInfo()
+        public River(double xTemp, double yTemp, string descriptionTemp, string nameTemp, double speedTemp, double totalLengthTemp)
+        {
+            X = xTemp;
+            Y = yTemp;
+            Description = descriptionTemp;
+            Name = nameTemp;
+            Speed = speedTemp;
+            TotalLength = totalLengthTemp;
+        }
+        public void getInfo()
+        {
+            Console.WriteLine($"Info about {Name}{Environment.NewLine}x={X}; y={Y}; description={Description}; name={Name}; total length={TotalLength} km; speed={Speed} km/s");
+        }
+    }
+
+    class Mountain : IGeoObject
     {
-        Console.WriteLine("x=" + this.x + "; y=" + this.y + "; description=" + this.description + "; name=" + this.name + "; hightest peak:" +this.highestPeak);
+        public string HighestPeak { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public Mountain(double xTemp, double yTemp, string descriptionTemp, string nameTemp, string highestPeakTemp)
+        {
+            X = xTemp;
+            Y = yTemp;
+            Description = descriptionTemp;
+            Name = nameTemp;
+            HighestPeak = highestPeakTemp;
+        }
+        public void getInfo()
+        {
+            Console.WriteLine($"Info about {Name}{Environment.NewLine}x={X}; y={Y}; description={Description}; name={Name}; highest peak={HighestPeak}");
+        }
     }
+    class Program
 
-}
+    {
+        static void Main(string[] args)
+        {
+            Mountain mountain = new Mountain(35.880981, 76.508102, "It's very beautiful!", "K2", "Dhaulagiri I");
+            River river = new River(48.450001, 34.983334, "It`s beautiful!", "Dnipro", 2, 2.201);
+            river.getInfo();
+            mountain.getInfo();
 
-class Program
 
-{
-    static void Main(string[] args) { 
-        Mountain mountain=new Mountain();
-        River river =new River(3.2, 4.5, "it beautiful!", "Dnipro", 20, 1000);
-        River riv = new River();
-        river.getInfo();
+        }
+
     }
-    
 }
